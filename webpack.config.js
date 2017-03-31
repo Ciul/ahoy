@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 let entry = [
     './src/app.js'
@@ -8,13 +9,18 @@ let entry = [
 
 let output = {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: 'app.[hash].js'
 }
 
 let plugins = [
+    new webpack.NamedModulesPlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
         title: 'Ahoy!',
         template: path.resolve(__dirname, 'src', 'index-template.html')
+    }),
+    new ExtractTextPlugin({
+        filename: 'app.[contenthash].css'
     })
 ]
 
@@ -25,12 +31,13 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.scss$/,
                 exclude: /node_modules/,
-                use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader' }
-                ]
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: ["css-loader", "sass-loader"],
+                    publicPath: '/dist'
+                })
             }
         ]
     }
