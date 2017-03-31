@@ -61,4 +61,4 @@ typings/
 .vscode
 
 # Distribution folder -> build it!
-dist/
+dist
