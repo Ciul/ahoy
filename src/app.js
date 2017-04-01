@@ -1,3 +1,9 @@
 const css = require('./css/styles.scss')
 
-console.log('HERE I AM FINALLY')
+import React from 'react'
+import ReactDOM from 'react-dom'
+
+ReactDOM.render(
+    <h1>Hello World!</h1>,
+   document.getElementById('app') 
+)

@@ -3,41 +3,69 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-let entry = [
+// Environment
+const isProduction = process.env.NODE_ENV === 'production'
+
+// Entry
+const entry = [
+    'babel-polyfill',
     './src/app.js'
 ]
 
-let output = {
+// Output
+const output = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'app.[hash].js'
 }
 
-let plugins = [
-    new webpack.NamedModulesPlugin(),
-    // new webpack.optimize.UglifyJsPlugin(),
+// CSS
+const cssDev = ['style-loader', 'css-loader', 'sass-loader']
+const cssProd = ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: ['css-loader', 'sass-loader'],
+    publicPath: '/dist'
+})
+const cssConfig = isProduction ? cssProd : cssDev
+
+// Plugins
+const plugins = [
     new HtmlWebpackPlugin({
         title: 'Ahoy!',
         template: path.resolve(__dirname, 'src', 'index-template.html')
     }),
     new ExtractTextPlugin({
-        filename: 'app.[contenthash].css'
-    })
+        filename: 'app.[contenthash].css',
+        disable: !isProduction,
+        allChunks: true
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
 ]
 
+// Dev Server
+const devServer = {
+    contentBase: path.resolve(__dirname, 'dist'),
+    compress: true,
+    stats: 'minimal',
+    hot: true
+}
+
+// Configuration
 const config = {
     entry,
     output,
     plugins,
+    devServer,
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: ["css-loader", "sass-loader"],
-                    publicPath: '/dist'
-                })
+                use: 'babel-loader'
+            },
+            {
+                test: /\.scss$/,
+                use: cssConfig
             }
         ]
     }
