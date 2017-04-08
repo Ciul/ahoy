@@ -29,6 +29,7 @@ const cssConfig = isProduction ? cssProd : cssDev
 
 // Plugins
 const plugins = [
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
         title: 'Ahoy!',
         template: path.resolve(__dirname, 'src', 'index-template.html')
@@ -39,7 +40,9 @@ const plugins = [
         allChunks: true
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(isProduction)
+    })
 ]
 
 // Dev Server
