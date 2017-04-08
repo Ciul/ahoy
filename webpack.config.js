@@ -50,12 +50,18 @@ const devServer = {
     hot: true
 }
 
+// Devtool
+const devtoolDev = 'inline-source-map'
+const devtoolProd = 'hidden-source-map'
+const devtool = isProduction ? devtoolProd : devtoolDev
+
 // Configuration
 const config = {
     entry,
     output,
     plugins,
     devServer,
+    devtool,
     module: {
         rules: [
             {
