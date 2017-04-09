@@ -1,12 +1,16 @@
-import Immutable from 'immutable'
-import { combineReducers } from 'redux-immutable'
+import { combineReducers } from 'redux'
 
-import projects from './projects'
+import dbReducer from './db'
+// import uiReducer from './ui'
 
 const reducers = {
-  projects
+  db: dbReducer
 }
 
-export const createReducer = (state) => {
-  return combineReducers(reducers, state)
+const initialState = {
+  db: undefined
+}
+
+export const createReducer = () => {
+  return combineReducers(reducers, initialState)
 }
