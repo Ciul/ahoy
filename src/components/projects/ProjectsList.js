@@ -1,28 +1,35 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-const ProjectsList = ({ projects }) => {
-    
-    const list = 
-        <ul>
-            {Object.keys(projects).map((id) => 
-                <li key={projects[id].id}>{projects[id].title}</li>
-            )}
-        </ul>
+import { getProjects } from '../../selectors/projects'
 
-    const emptyList = <div>No projects found.</div>
-
-    return <div>
+const ProjectsList = ({ projects }) =>
+    <div>
         <h2>Projects</h2>
-        { Object.keys(projects).length ? list : emptyList }
+        {(projects.length) ?
+            <ul>
+                {projects.map((project) => 
+                    <li key={project.id}>{project.title}</li>
+                )}       
+            </ul>
+            :
+            <span>No projects found.</span>
+        }
     </div>
+
+ProjectsList.propTypes = {
+    projects: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
+            title: PropTypes.string
+        })
+    )
 }
 
 const mapStateToProps = (state) => {
-    const projects = state.db.projects
-    
     return {
-        projects
+        projects: getProjects(state)
     }
 }
 
