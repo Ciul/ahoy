@@ -55,7 +55,7 @@ const devServer = {
 
 // Devtool
 const devtoolDev = 'inline-source-map'
-const devtoolProd = 'hidden-source-map'
+const devtoolProd = 'cheap-source-map'
 const devtool = isProduction ? devtoolProd : devtoolDev
 
 // Configuration

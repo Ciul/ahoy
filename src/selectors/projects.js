@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 
-const getProjectsFromState = state => state.db.projects
+export const getProjects = state => state.getIn(['entities', 'projects'])
 
-export const getProjects = createSelector(
-    [getProjectsFromState],
-    (projects) =>
-        Object.values(projects)
+export const getProjectsArray = createSelector(
+    [getProjects],
+    (projects) => [...projects.values()]
+    
 )

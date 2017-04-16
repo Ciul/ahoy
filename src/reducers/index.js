@@ -1,15 +1,16 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
+import { Record, Map } from 'immutable'
 
-import dbReducer from './db'
+import entitiesReducer from './entities'
 // import uiReducer from './ui'
 
 const reducers = {
-  db: dbReducer
+  entities: entitiesReducer
 }
 
-const initialState = {
-  db: undefined
-}
+const initialState = Record({
+  entities: undefined
+})
 
 export const createReducer = () => {
   return combineReducers(reducers, initialState)

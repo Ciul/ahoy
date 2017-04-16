@@ -5,23 +5,13 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
 import { storeCreate } from './includes/store'
-import ProjectsList from './components/projects/ProjectsList'
+import Root from './components/Root'
 
 const store = storeCreate()
 
-setTimeout(() => {
-  store.dispatch({
-    type: 'ADD_PROJECT',
-    payload: {
-      id: 3,
-      title: 'Project 3'
-    }
-  })
-}, 2000)
-
 ReactDOM.render(
   <Provider store={store}>
-    <ProjectsList />
+    <Root />
   </Provider>,
    document.getElementById('app')
 )
