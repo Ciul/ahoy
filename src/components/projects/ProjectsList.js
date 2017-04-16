@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom'
 
 import { getProjectsArray } from '../../selectors/projects'
 import AddProjectForm from './AddProjectControlledForm'
-import { addProject } from '../../actions/projects'
+import { addProject, removeProject } from '../../actions/projects'
 
-const ProjectsList = ({ projects, onAddProject }) =>
+const ProjectsList = ({ projects, onAddProject, onRemoveProject }) =>
     <div>
         <h2>Projects</h2>
         {(projects.length) ?
             <ul>
                 {projects.map((project) => 
-                    <li key={project.id}>{project.title}</li>
+                    <li key={project.id}>{project.title} <span onClick={() => { onRemoveProject(project.id) }}>Remove</span></li>
                 )}
             </ul>
             :
@@ -41,6 +41,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     onAddProject: (project) => {
         dispatch(addProject(project))
+    },
+    onRemoveProject: (id) => {
+        dispatch(removeProject(id))
     }
 })
 

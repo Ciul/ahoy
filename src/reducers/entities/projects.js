@@ -2,14 +2,14 @@ import { ADD_PROJECT, REMOVE_PROJECT } from '../../constants/action-types'
 import { Map } from 'immutable'
 
 const initialState = Map({
-  '1': {
-    id: 1,
-    title: 'Project 1'
-  },
-  '2': {
-    id: 2,
-    title: 'Project 2'
-  }
+  // '1': {
+  //   id: 1,
+  //   title: 'Project 1'
+  // },
+  // '2': {
+  //   id: 2,
+  //   title: 'Project 2'
+  // }
 })
 
 const projectsReducer = (projects = initialState, action) => {

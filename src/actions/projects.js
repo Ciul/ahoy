@@ -10,3 +10,10 @@ export const addProject = ({
         title
     }
 })
+
+export const removeProject = (id) => ({
+    type: REMOVE_PROJECT,
+    payload: {
+        id
+    }
+})
